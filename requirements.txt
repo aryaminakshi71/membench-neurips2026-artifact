@@ -1,0 +1,37 @@
+# Core dependencies
+numpy>=1.20.0
+scipy>=1.7.0
+scikit-learn>=1.0.0
+
+# Deep learning and embeddings
+torch>=1.9.0
+sentence-transformers>=2.2.0
+transformers>=4.20.0
+
+# Similarity search
+faiss-cpu>=1.7.0; sys_platform != "linux"
+faiss-gpu>=1.7.0; sys_platform == "linux"
+
+# Datasets
+huggingface-hub>=0.10.0
+datasets>=2.14.0
+
+# Text processing
+rank-bm25>=0.2.2
+nltk>=3.6
+
+# CLI and utilities
+click>=8.0.0
+tqdm>=4.62.0
+pyyaml>=5.4.0
+
+# Optional visualization (for reports)
+matplotlib>=3.5.0; extra == "viz"
+seaborn>=0.11.0; extra == "viz"
+plotly>=5.0.0; extra == "viz"
+
+# Development dependencies (for testing)
+pytest>=7.0.0; extra == "dev"
+black>=22.0.0; extra == "dev"
+flake8>=4.0.0; extra == "dev"
+mypy>=0.950; extra == "dev"

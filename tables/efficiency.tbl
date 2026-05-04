@@ -1,0 +1,12 @@
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{Efficiency and Scalability Metrics}
+\label{tab:efficiency}
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{System} & \textbf{Latency} & \textbf{P95 Lat.} & \textbf{QPS} & \textbf{Scal. Ratio} & \textbf{Memory (MB)} \\
+\midrule
+\bottomrule
+\end{tabular}
+\end{table}
