@@ -1,5 +1,5 @@
 # requirements_pinned.txt
-# Paper: LLM-05 — MemBench: Comprehensive Memory Evaluation
+# Paper: LLM-05 — MemSysBench: Comprehensive Memory Evaluation
 # Pinned for full reproducibility. Install with:
 #   pip install -r requirements_pinned.txt
 

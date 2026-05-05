@@ -1,5 +1,5 @@
 """
-Built-in memory system implementations for MemBench.
+Built-in memory system implementations for MemSysBench.
 
 Provides reference implementations of standard retrieval methods:
 - BM25: Sparse lexical retrieval
@@ -232,7 +232,7 @@ class DenseMemorySystem(MemorySystem):
     
     Uses pre-trained language models to encode memories and queries
     into dense vectors. When metadata includes ``precomputed_vector``
-    (MemBench shards), that row is indexed instead of encoding placeholder text.
+    (MemSysBench shards), that row is indexed instead of encoding placeholder text.
     """
     
     def __init__(self, 
@@ -345,7 +345,7 @@ class FAISSFlatMemorySystem(MemorySystem):
     search on GPU or CPU.
     
     Note: Requires faiss-cpu or faiss-gpu package. Install with:
-        pip install membench[faiss]
+        pip install memsysbench[faiss]
     """
     
     def __init__(self, 
@@ -360,7 +360,7 @@ class FAISSFlatMemorySystem(MemorySystem):
         except ImportError:
             raise ImportError(
                 "FAISS is required for FAISSFlatMemorySystem. "
-                "Install with: pip install faiss-cpu or pip install membench[faiss]"
+                "Install with: pip install faiss-cpu or pip install memsysbench[faiss]"
             )
         self._model_name = model_name
         self._device = device

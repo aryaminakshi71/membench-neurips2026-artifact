@@ -1,7 +1,7 @@
 \begin{table}[h]
 \centering
-\caption{MemBench Evaluation Results - System on Dataset}
-\label{tab:membench_system_dataset}
+\caption{MemSysBench Evaluation Results - System on Dataset}
+\label{tab:memsysbench_system_dataset}
 \begin{tabular}{lc}
 \toprule
 \textbf{Metric} & \textbf{Value} \\

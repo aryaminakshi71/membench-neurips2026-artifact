@@ -1,18 +1,18 @@
 """
-Example: Evaluate a built-in memory system with MemBench.
+Example: Evaluate a built-in memory system with MemSysBench.
 
 This example shows how to evaluate one of the built-in systems
-(BM25, TF-IDF, Dense, FAISS) on a MemBench dataset.
+(BM25, TF-IDF, Dense, FAISS) on a MemSysBench dataset.
 """
 
-from membench import MemBenchEvaluator, MemBenchDatasets
-from membench.builtin_systems import BM25MemorySystem, DenseMemorySystem
-from membench.report import ReportGenerator
+from memsysbench import MemSysBenchEvaluator, MemSysBenchDatasets
+from memsysbench.builtin_systems import BM25MemorySystem, DenseMemorySystem
+from memsysbench.report import ReportGenerator
 
 
 def main():
     print("=" * 60)
-    print("MemBench Example: Evaluating Built-in Memory Systems")
+    print("MemSysBench Example: Evaluating Built-in Memory Systems")
     print("=" * 60)
     
     # Step 1: Initialize a memory system
@@ -23,7 +23,7 @@ def main():
     
     # Step 2: Load benchmark dataset
     print("\n[2/4] Loading NaturalQuestions dataset...")
-    dataset = MemBenchDatasets.load(
+    dataset = MemSysBenchDatasets.load(
         'natural_questions',
         n_memories=500,
         n_queries=500
@@ -38,8 +38,8 @@ def main():
     print(f"   Added {system.get_stats()['n_memories']} memories")
     
     # Step 4: Run evaluation
-    print("\n[4/4] Running MemBench evaluation...")
-    evaluator = MemBenchEvaluator()
+    print("\n[4/4] Running MemSysBench evaluation...")
+    evaluator = MemSysBenchEvaluator()
     results = evaluator.evaluate_system(
         system=system,
         dataset_name='natural_questions',

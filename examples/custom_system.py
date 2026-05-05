@@ -1,17 +1,17 @@
 """
-Example: Evaluate a custom memory system with MemBench.
+Example: Evaluate a custom memory system with MemSysBench.
 
 This example shows how to implement and evaluate your own
-memory system using the MemBench framework.
+memory system using the MemSysBench framework.
 """
 
 from typing import List, Dict, Any, Optional
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from membench.systems import MemorySystem, RetrievalResult
-from membench import MemBenchEvaluator, MemBenchDatasets
-from membench.report import ReportGenerator
+from memsysbench.systems import MemorySystem, RetrievalResult
+from memsysbench import MemSysBenchEvaluator, MemSysBenchDatasets
+from memsysbench.report import ReportGenerator
 
 
 class MyCustomMemorySystem(MemorySystem):
@@ -82,13 +82,13 @@ class MyCustomMemorySystem(MemorySystem):
 
 def main():
     print("=" * 70)
-    print("MemBench Example: Evaluating Your Custom Memory System")
+    print("MemSysBench Example: Evaluating Your Custom Memory System")
     print("=" * 70)
     
     print("\n📝 Step-by-step guide:")
     print("   1. Subclass MemorySystem")
     print("   2. Implement add_memory(), retrieve(), get_stats()")
-    print("   3. Pass to MemBenchEvaluator")
+    print("   3. Pass to MemSysBenchEvaluator")
     print()
     
     # Step 1: Initialize your custom system
@@ -99,7 +99,7 @@ def main():
     
     # Step 2: Load dataset
     print("\n[2/3] Loading MS MARCO dataset...")
-    dataset = MemBenchDatasets.load('ms_marco', n_memories=500, n_queries=500)
+    dataset = MemSysBenchDatasets.load('ms_marco', n_memories=500, n_queries=500)
     print(f"   Loaded: {len(dataset['memories'])} memories, {len(dataset['queries'])} queries")
     
     # Step 3: Add memories
@@ -112,8 +112,8 @@ def main():
     print(f"\n   ✓ Total indexed: {len(my_system.memories)} memories")
     
     # Step 4: Evaluate
-    print("\n[4/4] Running MemBench evaluation...")
-    evaluator = MemBenchEvaluator()
+    print("\n[4/4] Running MemSysBench evaluation...")
+    evaluator = MemSysBenchEvaluator()
     results = evaluator.evaluate_system(
         my_system,
         dataset_name='ms_marco',
@@ -155,7 +155,7 @@ def main():
     print("Next steps:")
     print("  1. Check my_system_results.md for detailed results")
     print("  2. Use LaTeX tables in ./my_system_tables/ for papers")
-    print("  3. Compare with other systems using membench compare")
+    print("  3. Compare with other systems using memsysbench compare")
     print("=" * 70)
 
 

@@ -1,5 +1,5 @@
 """
-MemBench evaluation engine implementing all 12 capability dimensions.
+MemSysBench evaluation engine implementing all 12 capability dimensions.
 """
 
 import time
@@ -25,7 +25,7 @@ def _retrieve_kwargs(query: Dict[str, Any]) -> Dict[str, Any]:
 
 @dataclass
 class EvaluationConfig:
-    """Configuration for MemBench evaluation"""
+    """Configuration for MemSysBench evaluation"""
     n_queries: int = 500
     n_memories: int = 500
     k_values: List[int] = field(default_factory=lambda: [1, 5, 10, 20, 50])
@@ -36,9 +36,9 @@ class EvaluationConfig:
     measure_robustness: bool = True
 
 
-class MemBenchEvaluator:
+class MemSysBenchEvaluator:
     """
-    Main MemBench evaluation engine.
+    Main MemSysBench evaluation engine.
     
     Evaluates memory systems across 12 capability dimensions:
     
@@ -73,7 +73,7 @@ class MemBenchEvaluator:
                        queries: List[Dict],
                        ground_truth: List[List[str]]) -> Dict[str, Any]:
         """
-        Run complete MemBench evaluation on a memory system.
+        Run complete MemSysBench evaluation on a memory system.
         
         Args:
             system: Memory system to evaluate
@@ -84,7 +84,7 @@ class MemBenchEvaluator:
         Returns:
             Comprehensive evaluation results dictionary
         """
-        logger.info(f"Starting MemBench evaluation of {system.name} on {dataset_name}")
+        logger.info(f"Starting MemSysBench evaluation of {system.name} on {dataset_name}")
         
         results = {
             'system_name': system.name,
@@ -341,7 +341,7 @@ class MemBenchEvaluator:
             system_factories: Maps system name -> zero-arg factory returning MemorySystem
             datasets: Dataset names to evaluate
             dataset_loader: ``load(name) -> dict`` with ``memories``, ``queries``, ``ground_truth``
-                (same shape as ``MemBenchDatasets.load``).
+                (same shape as ``MemSysBenchDatasets.load``).
             
         Returns:
             Comparison results dictionary
@@ -376,4 +376,4 @@ class MemBenchEvaluator:
         return comparison
 
 
-__all__ = ['MemBenchEvaluator', 'EvaluationConfig']
+__all__ = ['MemSysBenchEvaluator', 'EvaluationConfig']

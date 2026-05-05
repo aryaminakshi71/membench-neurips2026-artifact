@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Test script to verify MemBench framework functionality.
+Test script to verify MemSysBench framework functionality.
 Run this to ensure the framework is working correctly.
 """
 
@@ -16,14 +16,14 @@ def test_imports():
     """Test that all modules can be imported"""
     print("Testing imports...")
     try:
-        import membench
-        from membench.systems import MemorySystem, RetrievalResult
-        from membench.builtin_systems import (
+        import memsysbench
+        from memsysbench.systems import MemorySystem, RetrievalResult
+        from memsysbench.builtin_systems import (
             BM25MemorySystem, TFIDFMemorySystem, DenseMemorySystem
         )
-        from membench.evaluator import MemBenchEvaluator, EvaluationConfig
-        from membench.datasets import MemBenchDatasets
-        from membench.report import ReportGenerator
+        from memsysbench.evaluator import MemSysBenchEvaluator, EvaluationConfig
+        from memsysbench.datasets import MemSysBenchDatasets
+        from memsysbench.report import ReportGenerator
         print("✓ All imports successful")
         return True
     except Exception as e:
@@ -36,7 +36,7 @@ def test_system_creation():
     """Test creating memory systems"""
     print("\nTesting system creation...")
     try:
-        from membench.builtin_systems import (
+        from memsysbench.builtin_systems import (
             BM25MemorySystem, TFIDFMemorySystem
         )
         
@@ -62,7 +62,7 @@ def test_memory_operations():
     """Test adding and retrieving memories"""
     print("\nTesting memory operations...")
     try:
-        from membench.builtin_systems import BM25MemorySystem
+        from memsysbench.builtin_systems import BM25MemorySystem
         
         system = BM25MemorySystem()
         
@@ -102,10 +102,10 @@ def test_evaluator_creation():
     """Test creating evaluator"""
     print("\nTesting evaluator creation...")
     try:
-        from membench.evaluator import MemBenchEvaluator, EvaluationConfig
+        from memsysbench.evaluator import MemSysBenchEvaluator, EvaluationConfig
         
         config = EvaluationConfig(n_queries=10, n_memories=10)
-        evaluator = MemBenchEvaluator(config)
+        evaluator = MemSysBenchEvaluator(config)
         
         print("  ✓ Evaluator created")
         print("✓ Evaluator creation successful")
@@ -120,7 +120,7 @@ def test_report_generator():
     """Test report generation"""
     print("\nTesting report generation...")
     try:
-        from membench.report import ReportGenerator
+        from memsysbench.report import ReportGenerator
         
         # Create mock results
         mock_results = {
@@ -159,7 +159,7 @@ def test_cli_import():
     """Test CLI import"""
     print("\nTesting CLI...")
     try:
-        from membench.cli import cli
+        from memsysbench.cli import cli
         print("  ✓ CLI imported")
         print("✓ CLI import successful")
         return True
@@ -173,8 +173,8 @@ def test_evaluation_flow():
     """Test complete evaluation flow with minimal data"""
     print("\nTesting complete evaluation flow...")
     try:
-        from membench.builtin_systems import BM25MemorySystem
-        from membench.evaluator import MemBenchEvaluator, EvaluationConfig
+        from memsysbench.builtin_systems import BM25MemorySystem
+        from memsysbench.evaluator import MemSysBenchEvaluator, EvaluationConfig
         
         # Create small system
         system = BM25MemorySystem()
@@ -203,7 +203,7 @@ def test_evaluation_flow():
         
         # Evaluate
         config = EvaluationConfig(n_queries=2, n_memories=5, k_values=[1, 2, 5])
-        evaluator = MemBenchEvaluator(config)
+        evaluator = MemSysBenchEvaluator(config)
         
         results = evaluator.evaluate_system(
             system, 'test', queries, ground_truth
@@ -228,7 +228,7 @@ def test_evaluation_flow():
 def main():
     """Run all tests"""
     print("=" * 70)
-    print("MemBench Framework Test Suite")
+    print("MemSysBench Framework Test Suite")
     print("=" * 70)
     
     tests = [

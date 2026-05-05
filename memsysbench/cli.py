@@ -1,10 +1,10 @@
 """
-Command-line interface for MemBench.
+Command-line interface for MemSysBench.
 
 Provides commands:
-- membench evaluate: Evaluate a system on datasets
-- membench compare: Compare multiple systems
-- membench report: Generate reports from results
+- memsysbench evaluate: Evaluate a system on datasets
+- memsysbench compare: Compare multiple systems
+- memsysbench report: Generate reports from results
 """
 
 import click
@@ -12,8 +12,8 @@ import json
 from pathlib import Path
 from typing import Dict
 
-from .evaluator import MemBenchEvaluator, EvaluationConfig
-from .datasets import MemBenchDatasets
+from .evaluator import MemSysBenchEvaluator, EvaluationConfig
+from .datasets import MemSysBenchDatasets
 from .builtin_systems import (
     BM25MemorySystem, TFIDFMemorySystem, DenseMemorySystem,
     FAISSFlatMemorySystem, HybridRRFMemorySystem
@@ -22,17 +22,17 @@ from .report import ReportGenerator
 
 
 @click.group()
-@click.version_option(version='1.0.0', prog_name='membench')
+@click.version_option(version='1.0.0', prog_name='memsysbench')
 def cli():
     """
-    MemBench: Comprehensive Memory System Evaluation Framework
+    MemSysBench: Comprehensive Memory System Evaluation Framework
     
     Evaluate and compare LLM memory systems across 12 capability dimensions
     using 5 standardized benchmark datasets.
     
     Example:
-        membench evaluate --system faiss --dataset natural_questions
-        membench compare --all --output comparison.html
+        memsysbench evaluate --system faiss --dataset natural_questions
+        memsysbench compare --all --output comparison.html
     """
     pass
 
@@ -51,7 +51,7 @@ def cli():
               help='Run on every registered dataset (text + image embedding shards).')
 @click.option('--n-memories', default=500, help='Number of memories to use')
 @click.option('--n-queries', default=500, help='Number of queries to evaluate')
-@click.option('--output', '-o', default='membench_results.json',
+@click.option('--output', '-o', default='memsysbench_results.json',
               help='Output file for results (JSON)')
 @click.option('--report-format', 
               type=click.Choice(['latex', 'markdown', 'all']),
@@ -66,15 +66,15 @@ def cli():
 )
 def evaluate(system, dataset, all_datasets, n_memories, n_queries, output, report_format, device, resume):
     """
-    Evaluate a memory system on MemBench datasets.
+    Evaluate a memory system on MemSysBench datasets.
     
     Example:
-        membench evaluate --system bm25 --dataset natural_questions --n-memories 500
-        membench evaluate --system dense -d ms_marco -d narrativeqa -o results.json
+        memsysbench evaluate --system bm25 --dataset natural_questions --n-memories 500
+        memsysbench evaluate --system dense -d ms_marco -d narrativeqa -o results.json
     """
-    click.echo(f"🚀 MemBench Evaluation")
+    click.echo(f"🚀 MemSysBench Evaluation")
     click.echo(f"   System: {system.upper()}")
-    ds_list = list(MemBenchDatasets.DATASET_CONFIGS.keys()) if all_datasets else list(dataset)
+    ds_list = list(MemSysBenchDatasets.DATASET_CONFIGS.keys()) if all_datasets else list(dataset)
     click.echo(f"   Datasets: {', '.join(ds_list)}")
     click.echo(f"   Configuration: {n_memories} memories, {n_queries} queries\n")
 
@@ -91,7 +91,7 @@ def evaluate(system, dataset, all_datasets, n_memories, n_queries, output, repor
 
     # Initialize evaluator
     config = EvaluationConfig(n_memories=n_memories, n_queries=n_queries)
-    evaluator = MemBenchEvaluator(config)
+    evaluator = MemSysBenchEvaluator(config)
     
     # Run evaluation for each dataset
     out_path = Path(output)
@@ -119,12 +119,12 @@ def evaluate(system, dataset, all_datasets, n_memories, n_queries, output, repor
             continue
         click.echo(f"📊 Loading {ds_name}...")
         try:
-            ds = MemBenchDatasets.load(ds_name, n_memories=n_memories, n_queries=n_queries)
+            ds = MemSysBenchDatasets.load(ds_name, n_memories=n_memories, n_queries=n_queries)
             
             click.echo(f"   ✓ Loaded: {len(ds['memories'])} memories, {len(ds['queries'])} queries")
 
             mem_system = _system_factory()
-            MemBenchDatasets.populate_system(mem_system, ds)
+            MemSysBenchDatasets.populate_system(mem_system, ds)
 
             click.echo(f"🔍 Running evaluation...")
             results = evaluator.evaluate_system(
@@ -182,17 +182,17 @@ def compare(systems, datasets, all_datasets, n_memories, n_queries, output, visu
     Compare multiple memory systems across datasets.
     
     Example:
-        membench compare --systems bm25,dense --datasets ms_marco,natural_questions
-        membench compare -s bm25,tfidf,faiss --all-datasets -o full_comparison.json
+        memsysbench compare --systems bm25,dense --datasets ms_marco,natural_questions
+        memsysbench compare -s bm25,tfidf,faiss --all-datasets -o full_comparison.json
     """
     system_list = [s.strip() for s in systems.split(',')]
     dataset_list = (
-        list(MemBenchDatasets.DATASET_CONFIGS.keys())
+        list(MemSysBenchDatasets.DATASET_CONFIGS.keys())
         if all_datasets
         else [d.strip() for d in datasets.split(',') if d.strip()]
     )
     
-    click.echo(f"🏆 MemBench Comparison")
+    click.echo(f"🏆 MemSysBench Comparison")
     click.echo(f"   Systems: {', '.join(system_list)}")
     click.echo(f"   Datasets: {', '.join(dataset_list)}\n")
     
@@ -211,14 +211,14 @@ def compare(systems, datasets, all_datasets, n_memories, n_queries, output, visu
 
     # Run comparison
     config = EvaluationConfig(n_memories=n_memories, n_queries=n_queries)
-    evaluator = MemBenchEvaluator(config)
+    evaluator = MemSysBenchEvaluator(config)
     
     click.echo("⏳ Running evaluations...\n")
     
     comparison = evaluator.compare_systems(
         factories,
         dataset_list,
-        lambda ds: MemBenchDatasets.load(ds, n_memories=n_memories, n_queries=n_queries),
+        lambda ds: MemSysBenchDatasets.load(ds, n_memories=n_memories, n_queries=n_queries),
     )
     
     # Save results
@@ -246,11 +246,11 @@ def compare(systems, datasets, all_datasets, n_memories, n_queries, output, visu
 @click.option('--output', '-o', help='Output file (defaults to appropriate extension)')
 def report(results_file, fmt, output):
     """
-    Generate reports from existing MemBench results.
+    Generate reports from existing MemSysBench results.
     
     Example:
-        membench report results.json --format latex
-        membench report comparison.json --format markdown -o report.md
+        memsysbench report results.json --format latex
+        memsysbench report comparison.json --format markdown -o report.md
     """
     click.echo(f"📄 Generating {fmt} report from {results_file}...")
     
@@ -277,9 +277,9 @@ def report(results_file, fmt, output):
 @cli.command()
 def list_datasets():
     """List available benchmark datasets."""
-    click.echo("📚 Available MemBench Datasets:\n")
+    click.echo("📚 Available MemSysBench Datasets:\n")
     
-    datasets = MemBenchDatasets.list_datasets()
+    datasets = MemSysBenchDatasets.list_datasets()
     for name, info in datasets.items():
         click.echo(f"  • {name}")
         click.echo(f"    Type: {info['type']}")
@@ -289,10 +289,10 @@ def list_datasets():
 
 @cli.command()
 def info():
-    """Show MemBench framework information."""
+    """Show MemSysBench framework information."""
     click.echo("""
 ╔══════════════════════════════════════════════════════════════╗
-║                    MemBench Framework v1.0.0                  ║
+║                    MemSysBench Framework v1.0.0                  ║
 ║                                                              ║
 ║  Comprehensive Evaluation Framework for LLM Memory Systems   ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -318,12 +318,12 @@ def info():
    • Hybrid-RRF (fusion)
 
 📖 Documentation:
-   GitHub: https://github.com/minakshi-arya/membench
-   Paper: MemBench (ICML/NeurIPS 2026 submission)
+   GitHub: https://anonymous.4open.science/r/memsysbench
+   Paper: MemSysBench (NeurIPS 2026 submission)
 
 Quick Start:
-   membench evaluate --system bm25 --dataset natural_questions
-   membench compare --systems bm25,dense,faiss --all-datasets
+   memsysbench evaluate --system bm25 --dataset natural_questions
+   memsysbench compare --systems bm25,dense,faiss --all-datasets
     """)
 
 

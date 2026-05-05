@@ -1,10 +1,10 @@
-# MemBench Supplementary Material
+# MemSysBench Supplementary Material
 
-This supplementary package contains the anonymized MemBench framework used for the submitted benchmark paper.
+This supplementary package contains the anonymized MemSysBench framework used for the submitted benchmark paper.
 
 ## Contents
 
-- `membench/`: installable Python package with dataset loading, backend interfaces, evaluator, CLI, and report generation.
+- `memsysbench/`: installable Python package with dataset loading, backend interfaces, evaluator, CLI, and report generation.
 - `examples/`: minimal examples for evaluating a baseline, comparing systems, and defining a custom memory system.
 - `tests/`: framework tests for evaluator and backend behavior.
 - `tables/`: generated result tables used by the paper.
@@ -25,26 +25,26 @@ FAISS-backed runs additionally require a FAISS installation, for example `faiss-
 Evaluate one backend on one dataset:
 
 ```bash
-membench evaluate --system faiss --dataset natural_questions --n-memories 500 --n-queries 500
+memsysbench evaluate --system faiss --dataset natural_questions --n-memories 500 --n-queries 500
 ```
 
 Compare multiple backends:
 
 ```bash
-membench compare --systems bm25,tfidf,faiss --datasets ms_marco,natural_questions
+memsysbench compare --systems bm25,tfidf,faiss --datasets ms_marco,natural_questions
 ```
 
 ## Programmatic Use
 
 ```python
-from membench import MemBenchDatasets, MemBenchEvaluator
-from membench.systems import FAISSFlatMemorySystem
+from memsysbench import MemSysBenchDatasets, MemSysBenchEvaluator
+from memsysbench.systems import FAISSFlatMemorySystem
 
-bundle = MemBenchDatasets.load("natural_questions", n_memories=500, n_queries=500)
+bundle = MemSysBenchDatasets.load("natural_questions", n_memories=500, n_queries=500)
 system = FAISSFlatMemorySystem()
-MemBenchDatasets.populate_system(system, bundle)
+MemSysBenchDatasets.populate_system(system, bundle)
 
-evaluator = MemBenchEvaluator()
+evaluator = MemSysBenchEvaluator()
 results = evaluator.evaluate_system(
     system,
     "natural_questions",
@@ -55,7 +55,7 @@ results = evaluator.evaluate_system(
 
 ## Adding a Dataset
 
-New datasets can be used by producing a MemBench bundle with:
+New datasets can be used by producing a MemSysBench bundle with:
 
 - `memories`: `(memory_id, content, metadata)` tuples
 - `queries`: dictionaries with query identifiers, text or image references, and optional precomputed vectors

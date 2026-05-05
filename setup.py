@@ -1,5 +1,5 @@
 """
-Setup script for MemBench package.
+Setup script for MemSysBench package.
 """
 
 from setuptools import setup, find_packages
@@ -10,14 +10,14 @@ readme_file = Path(__file__).parent / "README.md"
 long_description = readme_file.read_text() if readme_file.exists() else ""
 
 setup(
-    name='membench',
+    name='memsysbench',
     version='1.0.0',
     author='Anonymous Author(s)',
     author_email='anonymous@example.com',
     description='Comprehensive Evaluation Framework for LLM Memory Systems',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://anonymous.4open.science/r/membench',
+    url='https://anonymous.4open.science/r/memsysbench',
     packages=find_packages(),
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -55,12 +55,12 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'membench=membench.cli:main',
+            'memsysbench=memsysbench.cli:main',
         ],
     },
     include_package_data=True,
     zip_safe=False,
     project_urls={
-        'Source': 'https://anonymous.4open.science/r/membench',
+        'Source': 'https://anonymous.4open.science/r/memsysbench',
     },
 )

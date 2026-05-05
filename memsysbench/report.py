@@ -1,5 +1,5 @@
 """
-Report generation for MemBench evaluation results.
+Report generation for MemSysBench evaluation results.
 
 Generates publication-ready outputs:
 - LaTeX tables for papers
@@ -31,7 +31,7 @@ class ReportGenerator:
         Initialize with evaluation results.
         
         Args:
-            results: Dictionary from MemBenchEvaluator.evaluate_system()
+            results: Dictionary from MemSysBenchEvaluator.evaluate_system()
                     or compare_systems()
         """
         self.results = results
@@ -73,8 +73,8 @@ class ReportGenerator:
             latex = r"""\begin{table*}[t]
 \centering
 \scriptsize
-\caption{MemBench Evaluation Results - Complete Comparison Across Systems and Datasets}
-\label{tab:membench_complete}
+\caption{MemSysBench Evaluation Results - Complete Comparison Across Systems and Datasets}
+\label{tab:memsysbench_complete}
 \begin{tabular}{lccccccc}
 \toprule
 \textbf{System} & \textbf{Dataset} & \textbf{MRR} & \textbf{NDCG@10} & \textbf{P@10} & \textbf{Latency (ms)} & \textbf{QPS} & \textbf{MemEff} \\
@@ -109,8 +109,8 @@ class ReportGenerator:
             
             latex = r"""\begin{table}[h]
 \centering
-\caption{MemBench Evaluation Results - """ + system_name + r""" on """ + dataset + r"""}
-\label{tab:membench_""" + system_name.lower() + r"""_""" + dataset.lower() + r"""}
+\caption{MemSysBench Evaluation Results - """ + system_name + r""" on """ + dataset + r"""}
+\label{tab:memsysbench_""" + system_name.lower() + r"""_""" + dataset.lower() + r"""}
 \begin{tabular}{lc}
 \toprule
 \textbf{Metric} & \textbf{Value} \\
@@ -149,7 +149,7 @@ class ReportGenerator:
         latex = r"""\begin{table*}[t]
 \centering
 \scriptsize
-\caption{Per-Dataset Performance Breakdown - All 5 MemBench Datasets}
+\caption{Per-Dataset Performance Breakdown - All 5 MemSysBench Datasets}
 \label{tab:dataset_breakdown}
 \begin{tabular}{lcccccc}
 \toprule
@@ -213,7 +213,7 @@ class ReportGenerator:
         
         return latex
     
-    def generate_json(self, output_file: str = 'membench_results.json') -> None:
+    def generate_json(self, output_file: str = 'memsysbench_results.json') -> None:
         """Save results as JSON"""
         with open(output_file, 'w') as f:
             json.dump(self.results, f, indent=2)
@@ -221,7 +221,7 @@ class ReportGenerator:
     def generate_markdown_summary(self, output_file: str = 'RESULTS.md') -> None:
         """Generate GitHub-friendly markdown summary"""
         
-        md = f"""# MemBench Evaluation Results
+        md = f"""# MemSysBench Evaluation Results
 
 **Generated:** {self.timestamp}
 
@@ -274,7 +274,7 @@ class ReportGenerator:
     def print_summary(self) -> None:
         """Print text summary to console"""
         print("\n" + "="*60)
-        print("  MemBench Evaluation Results")
+        print("  MemSysBench Evaluation Results")
         print("="*60)
         
         if 'results' in self.results:

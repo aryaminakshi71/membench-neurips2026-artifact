@@ -1,21 +1,21 @@
 """
-Example: Compare multiple memory systems with MemBench.
+Example: Compare multiple memory systems with MemSysBench.
 
 This example shows how to compare different memory systems
 (BM25, Dense, FAISS) across multiple datasets.
 """
 
-from membench import MemBenchEvaluator, MemBenchDatasets
-from membench.builtin_systems import (
+from memsysbench import MemSysBenchEvaluator, MemSysBenchDatasets
+from memsysbench.builtin_systems import (
     BM25MemorySystem, TFIDFMemorySystem, DenseMemorySystem,
     FAISSFlatMemorySystem
 )
-from membench.report import ReportGenerator
+from memsysbench.report import ReportGenerator
 
 
 def main():
     print("=" * 70)
-    print("MemBench Example: Comparing Multiple Memory Systems")
+    print("MemSysBench Example: Comparing Multiple Memory Systems")
     print("=" * 70)
     
     # Define systems to compare
@@ -39,9 +39,9 @@ def main():
     
     # Initialize evaluator
     print("\n[3/5] Initializing evaluator...")
-    from membench.evaluator import EvaluationConfig
+    from memsysbench.evaluator import EvaluationConfig
     config = EvaluationConfig(n_memories=500, n_queries=500)
-    evaluator = MemBenchEvaluator(config)
+    evaluator = MemSysBenchEvaluator(config)
     
     # Run comparison
     print("\n[4/5] Running comparisons (this may take a few minutes)...")
@@ -55,7 +55,7 @@ def main():
         
         for dataset_name in datasets:
             print(f"  Loading {dataset_name}...", end=' ')
-            dataset = MemBenchDatasets.load(
+            dataset = MemSysBenchDatasets.load(
                 dataset_name,
                 n_memories=500,
                 n_queries=500

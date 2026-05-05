@@ -1,5 +1,5 @@
 """
-Standardized dataset loaders for MemBench (precomputed embeddings only).
+Standardized dataset loaders for MemSysBench (precomputed embeddings only).
 
 Loads vectors from ``local/shared_datasets/embeddings/text`` (or
 ``LLMRESEARCH_EMBEDDINGS_DIR``). Each row is a memory; the first ``n_queries``
@@ -101,7 +101,7 @@ def _fallback_image_models(preferred: str) -> List[str]:
     return ordered
 
 
-class MemBenchDatasets:
+class MemSysBenchDatasets:
     """
     Load benchmark corpora from precomputed embedding shards (no Hugging Face).
     """
@@ -218,7 +218,7 @@ class MemBenchDatasets:
         """
         Insert all memories from a load() bundle into a MemorySystem before evaluate_system().
 
-        MemBench evaluators expect the system index to be built from ``bundle["memories"]``,
+        MemSysBench evaluators expect the system index to be built from ``bundle["memories"]``,
         each item is ``(memory_id, content, metadata_dict)``.
         """
         for item in bundle.get("memories") or []:
@@ -237,4 +237,4 @@ class MemBenchDatasets:
         }
 
 
-__all__ = ["MemBenchDatasets"]
+__all__ = ["MemSysBenchDatasets"]

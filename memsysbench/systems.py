@@ -21,12 +21,12 @@ class RetrievalResult:
 
 class MemorySystem(ABC):
     """
-    Abstract base class for all memory systems to be evaluated by MemBench.
+    Abstract base class for all memory systems to be evaluated by MemSysBench.
     
     To evaluate your own memory system:
     1. Subclass MemorySystem
     2. Implement all abstract methods
-    3. Pass to MemBenchEvaluator
+    3. Pass to MemSysBenchEvaluator
     
     Example:
         class MyMemorySystem(MemorySystem):
